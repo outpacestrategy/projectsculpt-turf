@@ -1,0 +1,12 @@
+# Legacy booking-app paths → app.projectsculpt-turf.com
+# The booking app moved off the apex. Keep old bookmarks / ads working.
+# These MUST come before the SPA catch-all below.
+
+/schedule           https://app.projectsculpt-turf.com/schedule           301!
+/schedule/*         https://app.projectsculpt-turf.com/schedule/:splat    301!
+/book               https://app.projectsculpt-turf.com/schedule           301!
+/members            https://app.projectsculpt-turf.com/                   301!
+/members/*          https://app.projectsculpt-turf.com/:splat             301!
+
+# SPA fallback — React Router handles the rest.
+/*                  /index.html                                          200

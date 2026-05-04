@@ -1,0 +1,111 @@
+# Netlify deploy configuration for Project Sculpt
+# Docs: https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# ---------- Legacy booking-app paths → app.projectsculpt-turf.com ----------
+# The member booking/scheduling app used to live at the apex. It now lives at
+# app.projectsculpt-turf.com and this marketing site owns the apex.
+# These 301s keep any old bookmarks, Google listings, and Meta Ads links working.
+# NOTE: Redirects are evaluated top-to-bottom, so these MUST come before the
+# SPA catch-all rule below.
+#
+# `/schedule` and `/schedule/*` are intentionally NOT redirected — the marketing
+# site now owns that path (see src/pages/Schedule.tsx). `/book` is the shortlink
+# that sends users directly to the booking app.
+
+[[redirects]]
+  from = "/book"
+  to = "https://app.projectsculpt-turf.com/schedule"
+  status = 301
+  force = true
+
+# Dynamic sitemap — the Netlify function queries Supabase for live blog
+# post rows so new posts appear without a redeploy. `force = true` wins
+# over the static public/sitemap.xml file (kept as a fallback).
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/.netlify/functions/sitemap"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/members"
+  to = "https://app.projectsculpt-turf.com/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/members/*"
+  to = "https://app.projectsculpt-turf.com/:splat"
+  status = 301
+  force = true
+
+# Do NOT redirect /admin or /admin/* — that's the Supabase CMS for this
+# marketing site and lives here at projectsculpt-turf.com/admin.
+
+# SPA fallback — React Router handles every non-asset URL on the client.
+# Netlify evaluates asset files first, so real files (og-image.jpg, sitemap.xml,
+# robots.txt, /assets/*) are still served directly.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Force apex / www canonical (leave commented until DNS is confirmed).
+# [[redirects]]
+#   from = "https://www.projectsculpt-turf.com/*"
+#   to   = "https://projectsculpt-turf.com/:splat"
+#   status = 301
+#   force = true
+
+# ---------- Security & caching headers ----------
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    X-XSS-Protection = "1; mode=block"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+# Long-cache the hashed Vite build output
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Long-cache media
+[[headers]]
+  for = "/videos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Shorter cache on crawler/entrypoint files so updates propagate fast
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

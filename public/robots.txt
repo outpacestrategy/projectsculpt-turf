@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/login
+Disallow: /admin/guide
+
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: Twitterbot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: facebookexternalhit
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+Sitemap: https://projectsculpt-turf.com/sitemap.xml

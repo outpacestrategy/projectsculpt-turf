@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Fallback <title> only. react-helmet-async owns the per-route
+         <title>, <meta name=description>, canonical, OG, Twitter, robots,
+         and JSON-LD tags at runtime. We deliberately DO NOT ship a static
+         <meta name=description> here because Helmet can't dedupe pre-existing
+         static metas — shipping one would result in duplicate descriptions
+         on every SPA route, a negative SEO signal. -->
+    <title>Project Sculpt | HYROX & Group Fitness Gym in Fort Lauderdale</title>
+
+    <!-- author, geo.region, geo.placename, geo.position, ICBM are rendered
+         per-route by react-helmet-async in src/components/SEO.tsx. They are
+         intentionally NOT duplicated here — Helmet doesn't dedupe against
+         pre-existing static metas, so shipping them in the HTML shell
+         produces duplicate tags on every SPA route. -->
+
+    <!-- Favicon / App Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+
+    <!-- Preconnect / DNS prefetch for third parties -->
+    <!-- TODO(turf): once the Turf Supabase project is created, replace
+         REPLACE_WITH_TURF_SUPABASE_PROJECT_ID with the new project ref
+         (the subdomain of *.supabase.co), then uncomment.
+    <link rel="preconnect" href="https://REPLACE_WITH_TURF_SUPABASE_PROJECT_ID.supabase.co" crossorigin />
+    <link rel="dns-prefetch" href="https://REPLACE_WITH_TURF_SUPABASE_PROJECT_ID.supabase.co" />
+    -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
+    />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="padding:1rem;font-family:system-ui,sans-serif">
+        Project Sculpt — HYROX &amp; group fitness training in Fort Lauderdale.
+        Please enable JavaScript to view the full site, or email
+        <a href="mailto:info@projectsculpt-turf.com">info@projectsculpt-turf.com</a>.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
