@@ -13,13 +13,11 @@
  * them here and skip the env-var dance.
  */
 
-// TODO(turf): replace both values once the Turf Supabase project is created.
-// SUPABASE_URL  = https://<project-ref>.supabase.co
-// SUPABASE_ANON_KEY = the anon (publishable) key from Project Settings → API.
-// The anon key is safe to commit (it's also shipped in the client bundle), so
-// we keep these inline rather than fighting Netlify Functions' env-var rules.
-const SUPABASE_URL = "https://REPLACE_WITH_TURF_SUPABASE_PROJECT_ID.supabase.co";
-const SUPABASE_ANON_KEY = "REPLACE_WITH_TURF_SUPABASE_ANON_KEY";
+// The publishable key is safe to commit (it's also shipped in the client
+// bundle), so we keep these inline rather than fighting Netlify Functions'
+// env-var rules.
+const SUPABASE_URL = "https://wosnatgumgpawrfodwnp.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_nFuxCjMOR0T16FZKkYM52A_ZWd69puh";
 
 const SITE_URL = "https://projectsculpt-turf.com";
 

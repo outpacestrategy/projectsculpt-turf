@@ -7,19 +7,22 @@ list before pointing DNS or running ads.
 
 ## Backend (blocking — site won't run without these)
 
-- [ ] **Create the Turf Supabase project.** Copy the new project ref into:
-  - `supabase/config.toml` → replace `REPLACE_WITH_TURF_SUPABASE_PROJECT_ID`
-  - `netlify/functions/sitemap.ts` → replace both `REPLACE_WITH_*` constants
-  - `index.html` → replace the `REPLACE_WITH_TURF_SUPABASE_PROJECT_ID` in the
-    preconnect comment, then uncomment the `<link>` tags
+- [x] **Turf Supabase project wired in.** Project ref `wosnatgumgpawrfodwnp`
+  is set in `supabase/config.toml`, `index.html` preconnect, and
+  `netlify/functions/sitemap.ts` (both URL and publishable key).
 - [ ] **Run the Las Olas migrations against the new project.** Same schema
   (`coaches`, `community_photos`, `schedule_classes`, `blog_posts`). The
   migrations live under `supabase/migrations/` and copied over with the repo.
+  From repo root:
+  ```bash
+  supabase link --project-ref wosnatgumgpawrfodwnp
+  supabase db push
+  ```
 - [ ] **Create the Turf Netlify site** and set these env vars in
-  Site settings → Environment variables (matches `.env.example`):
-  - `VITE_SUPABASE_PROJECT_ID`
-  - `VITE_SUPABASE_PUBLISHABLE_KEY`
-  - `VITE_SUPABASE_URL`
+  Site settings → Environment variables:
+  - `VITE_SUPABASE_URL` = `https://wosnatgumgpawrfodwnp.supabase.co`
+  - `VITE_SUPABASE_PROJECT_ID` = `wosnatgumgpawrfodwnp`
+  - `VITE_SUPABASE_PUBLISHABLE_KEY` = `sb_publishable_nFuxCjMOR0T16FZKkYM52A_ZWd69puh`
   - `VITE_META_PIXEL_ID` (new Meta Pixel for the Turf location)
   - `VITE_GA4_ID` (new GA4 property for the Turf location)
 - [ ] **Confirm `info@projectsculpt-turf.com` exists** and accepts mail (the
