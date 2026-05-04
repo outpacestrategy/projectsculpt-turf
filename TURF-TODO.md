@@ -72,13 +72,32 @@ first, then sweep:
   block at the bottom of `netlify.toml`
 - [ ] Submit `https://projectsculpt-turf.com/sitemap.xml` to Google Search
   Console
-- [ ] Create a new git remote (e.g. `outpacestrategy/projectsculpt-turf` on
-  GitHub) and push
+- [x] Create a new git remote (`outpacestrategy/projectsculpt-turf` on
+  GitHub) and push the initial commit
+- [ ] Submit the live site URL to Bing Webmaster Tools too (separate from GSC)
 
-## Repo hygiene
+## SEO & Netlify-readiness (verified 2026-05-04)
 
-- [ ] Decide whether to keep `bun.lock` + `bun.lockb` (the Las Olas project
-  used both bun and npm). If sticking with npm, delete the bun lockfiles to
-  avoid drift.
+- [x] All 14 routes wired with SEO/NoIndex. Public pages emit
+  `<title>`, meta description, canonical, OG, Twitter, geo, JSON-LD via
+  `<SEO>`. Admin and 404 routes emit `noindex, nofollow` via `<NoIndex>`.
+- [x] `public/sitemap.xml` (static fallback) trimmed: removed Las Olas blog
+  post slugs, kept the static route shell only. The dynamic
+  `netlify/functions/sitemap.ts` pulls live posts from Supabase once the
+  schema is migrated.
+- [x] `npm run build` passes clean (3.71s, 2056 modules transformed,
+  no TS errors). Output lands in `dist/` matching the netlify.toml publish dir.
+- [x] netlify.toml verified: Node 20, security headers (HSTS, X-Frame-Options,
+  X-Content-Type-Options, Referrer-Policy, Permissions-Policy), long-cache on
+  /assets /videos /images, short-cache on /index.html, SPA fallback ordered
+  AFTER the legacy app-subdomain 301s.
+- [ ] **Repo hygiene — delete bun lockfiles before pushing.** Both `bun.lock`
+  and `bun.lockb` ship alongside `package-lock.json`. Netlify is told to use
+  npm via `command = "npm run build"`, but having both bun and npm lockfiles
+  is a footgun (auto-detection can flip). Run from repo root:
+  ```bash
+  rm -f bun.lock bun.lockb
+  git add -A && git commit -m "chore: drop bun lockfiles, npm is canonical"
+  ```
 - [ ] Update `src/pages/AdminGuide.tsx` screenshots / wording if the admin
   CMS workflow differs at all for Turf staff.
